@@ -5,7 +5,6 @@
 
 void print(double** a, int n, int m){
 
-        printf("\n\nPRINTING\n");
         for(int i = 0; i < n; i++ ) {
                 for(int j = 0; j < m; j++) {
                         printf("%lf ", a[i][j]);
@@ -17,7 +16,6 @@ void print(double** a, int n, int m){
 
 void transpose(int n, int m, double **x, double **xTranspose) {
 	int index = 0; 
-	//printf("n : %d  m : %d\n", n, m);
 
 	for(int i = 0; i < m; i++) {
 		//go through the first index of every column 
@@ -32,7 +30,6 @@ void transpose(int n, int m, double **x, double **xTranspose) {
 }
 //m and u have to be the same due to matrix multiplication properties. 
 void multiply(int n, int m, double **a, int u, int v, double **b, double **res) {
-///	printf("n: %d, m: %d, u: %d, v: %d\n", n, m, u, v);	
 	if(m != u) {
 
 		puts("Sizes do not match");
@@ -41,10 +38,8 @@ void multiply(int n, int m, double **a, int u, int v, double **b, double **res) 
 	for(int i = 0; i < n; i++) {
 		for(int j = 0; j < v; j++) {
 			for(int k = 0; k < m; k++ ) {
-				//printf("miltiplying: %lf and %lf\n", a[i][k], b[k][j] );
 				res[i][j] = res[i][j] +  (a[i][k] * b[k][j]);
-			}
-			//printf("\n"); 
+			} 
 		}
 	}
 	return; 
@@ -52,7 +47,7 @@ void multiply(int n, int m, double **a, int u, int v, double **b, double **res) 
 
 void inverse(double **x, double** identity, int r) {
 	//according to algorith
-	//divide that way its guaranteed to be zero?  
+	//divide that way its guaranteed to be zero 
 	for(int i = 0; i < r; i++) {
 		//divide all of row i by pivot i
 		double temp = x[i][i];
@@ -61,9 +56,6 @@ void inverse(double **x, double** identity, int r) {
 			x[i][row] = x[i][row] / temp;//x[i][i];	
 			identity[i][row] = identity[i][row] / temp;//x[i][i];
 		}
-		//puts("AFTER DIVISION");
-		//print(x,r,r);
-		//print(identity,r,r);
 		for(int j = i+1; j < r; j++) {
 			//subtract from second row, the first row * a multiple of that second row
 			double temp = x[j][i];
@@ -74,18 +66,7 @@ void inverse(double **x, double** identity, int r) {
 			}
 		}
 
-
-		//return;
-		//puts("AFTER SUBTRACTING");
-		//print(x,r,r);
-		//print(identity, r,r ); 
 	}
-		//if(1) {
-		//puts("AFTER");
-		//print(x,r,r);
-		//print(identity,r,r);
-		//return ;
-		//}
 	
 	for(int i = r- 1; i >= 0; i--) {
 		for(int j = i-1; j >= 0; j--) {
@@ -103,9 +84,7 @@ void multiplyVector(double **x, int r, int c, double *y, double *result ) {
 	for(int i = 0; i < r; i++) {
 		for(int j = 0; j < c; j++) {
 			result[i] += x[i][j] * y[j]; 
-			//printf("multi %lf * %lf -> added: %lf\n", x[i][j], y[j],  x[i][j] * y[j]);
-		}
-		//printf("\n");
+		}	
 	}
 
 	return; 
@@ -126,24 +105,20 @@ int main(int argc, char **argv)
 	//scan the name
 	char *name = malloc(60*sizeof(char) );
 	fscanf(file, "%s", name);
-///	printf("name: %s\n", name);
 	
 	//scan the attribute count
 	char *in = malloc(12*sizeof(char)); 
 	fscanf(file, "%s", in);
 	int k = atoi(in);
-///     printf("k: %d\n", k);
 
 	//scan the number of houses 
 	fscanf(file, "%s", in);
 	int m = atoi(in);
-///     printf("m: %d\n", m);
 	free(in); 
 	
 	//create the 2d Array
 	int r = m ;
 	int c = k + 1; 
-///	printf("r: %d  c: %d\n", r,c);
 	double *y = malloc(r*sizeof(double));
 	double **arr = malloc(r*sizeof(double*));
 	for(int i = 0; i < r; i++) {
@@ -152,22 +127,18 @@ int main(int argc, char **argv)
 	//populate the 2d array
 	char *nums = malloc(11*sizeof(int));
 	for(int i = 0; i < r; i++) {
-			//populate both arrays at once
-			//printf("Y at %d : %lf     X:  ", i, y[i][0]); 
+		//populate both arrays at once 
 		for(int j = 1; j < c;j++) {
 			if(j == 0) {
 				arr[i][j] = 1; 
 			}
 			if(fscanf(file, "%s", nums) != EOF) {
 				sscanf(nums, "%lf", &arr[i][j]);
-				//printf(" %lf ", arr[i][j]);
 			}
 		}
 		if(fscanf(file, "%s", nums) != EOF) {
                         sscanf(nums, "%lf", &y[i]);
                         }
-///                     printf("Y at %d : %lf   ", i, y[i]);
-///			printf("\n");
 	}
 
 	for(int i = 0 ; i < r; i++) {
@@ -178,17 +149,15 @@ int main(int argc, char **argv)
 
 	free(nums); 
 	//print the matrix	
-///	for(int i = 0; i < r; i++) {
-///                for(int j = 0; j < c;j++) {
-///               		printf("%lf ", arr[i][j]);
-///		}
-///		printf("\n");
-///        }
+//	for(int i = 0; i < r; i++) {
+//                for(int j = 0; j < c;j++) {
+//               		printf("%lf ", arr[i][j]);
+//		}
+//		printf("\n");
+//        }
 	//close the first file
 	fclose(file);
 
-//second file
-///	printf("file: %s\n", argv[2]);
 	FILE* file2 = fopen(argv[2], "r");
         //check if file is NULL
         if(file2 == NULL) {
@@ -199,18 +168,15 @@ int main(int argc, char **argv)
 	//scan name
 	char *name2 = malloc(60 *sizeof(char) );  
 	fscanf(file2, "%s", name2); 
-///     	printf("name2: %s\n", name2);  
 
 	//scan attributes
 	char *in2 = malloc(12*sizeof(char));
         fscanf(file2, "%s", in2);
         int k2 = atoi(in2);
-///        printf("k2: %d\n", k2);
 	
 	//scan the houses
 	fscanf(file2, "%s", in2);
         int m2 = atoi(in2);
-///        printf("m2: %d\n", m2);
         free(in2);
 
 	//create the second 2d array
@@ -268,7 +234,6 @@ int main(int argc, char **argv)
 	//multiply X^t and X
 	//declare memory, size (m*n) * (n*m) = m*m
 	double **multiple = malloc(c*sizeof(double*));
-//	if(name[0]=='t') {
 		for(int i = 0; i < c; i++) {
 			multiple[i] = malloc(c*sizeof(multiple[i]));
 		}
@@ -281,9 +246,6 @@ int main(int argc, char **argv)
 
 		multiply(c,r,xTranspose,r,c,arr,multiple);
 		//print multiple
-///		puts("multiple");
-///		print(multiple, c,c);
-
 //inverse
 	//take the inverse of multiple, a square matrix. 
 	//create the identity matrix. 
@@ -305,8 +267,6 @@ int main(int argc, char **argv)
 			}
 			counter++;
 		}
-///			puts("\nIdentity:");
-///			print(identity,c,c);
 		//call inverse
 		inverse(multiple, identity, c);
 
@@ -377,11 +337,10 @@ int main(int argc, char **argv)
 	double *price = malloc(r2*sizeof(double));
 	multiplyVector(arr2, r2, c2, result, price); 
 	
-///	printf("PRICE:\n");
         for(int i = 0; i < r2; i++) {
       		printf("%.0f\n", price[i] );
 	}
-///        printf("\n");
+	
 	//free variables
 	 for(int i = 0; i < r; i++) {
                 free(arr[i]);
